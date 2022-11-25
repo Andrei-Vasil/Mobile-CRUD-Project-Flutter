@@ -62,15 +62,12 @@ class _CatFormState extends State<CatForm> {
               if (age != '') {
                 widget.cat.age = age;
               }
-
               if (breed != '') {
                 widget.cat.breed = breed;
               }
-
               if (owner != '') {
                 widget.cat.owner = owner;
               }
-
               if (date != '') {
                 widget.cat.date = date;
               }
@@ -85,11 +82,11 @@ class _CatFormState extends State<CatForm> {
                 ));
               } else {
                 Cat toAddCat = Cat(
-                  name: name,
-                  age: age,
-                  breed: breed,
-                  owner: owner,
-                  date: date,
+                  name: widget.cat.name,
+                  age: widget.cat.age,
+                  breed: widget.cat.breed,
+                  owner: widget.cat.owner,
+                  date: widget.cat.date,
                 );
 
                 if (widget.catId.compareTo("") == 0) {

@@ -25,7 +25,7 @@ class CatCard extends StatelessWidget {
                     style: TextStyle(fontSize: 22),
                   ),
                   subtitle: Text(
-                    "Age: ${cat.name} \tBreed: ${cat.breed} \nOwner: ${cat.owner} \tAdoption date: ${cat.date}",
+                    "Age: ${cat.age} \tBreed: ${cat.breed} \nOwner: ${cat.owner} \tAdoption date: ${cat.date}",
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
