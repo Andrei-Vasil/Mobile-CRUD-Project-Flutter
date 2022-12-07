@@ -17,11 +17,14 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
     var catIdMap = ModalRoute.of(context)!.settings.arguments as Map;
     String catId = catIdMap[CAT_KEY];
 
-    Cat? cat = repository.getCatById(catId);
-    cat ??= Cat.empty();
-
-    return Scaffold(
-        backgroundColor: Colors.greenAccent, body: CatForm(catId, cat));
+    return FutureBuilder(
+        future: repository.getCatById(catId),
+        builder: ((context, snapshot) {
+          Cat? cat = snapshot.data;
+          cat ??= Cat.empty();
+          return Scaffold(
+              backgroundColor: Colors.greenAccent, body: CatForm(catId, cat));
+        }));
   }
 }
 
@@ -92,7 +95,7 @@ class _CatFormState extends State<CatForm> {
                 if (widget.catId.compareTo("") == 0) {
                   repository.addCat(toAddCat);
                 } else {
-                  repository.updateCat(widget.catId, toAddCat);
+                  repository.updateCat(toAddCat);
                 }
 
                 Navigator.of(context).pop();

@@ -1,43 +1,42 @@
 import 'cat.dart';
+import '../dao/cat_dao.dart';
 
 class Repository {
-  final List<Cat> _catList = [];
+  static late final CatDao dao;
 
-  void addCat(Cat catToAdd) {
-    _catList.add(catToAdd);
-  }
+  Future<List<Cat>> get catList async => await dao.findAllCats();
 
-  List<Cat> get catList => _catList;
-
-  void deleteCat(Cat cat) {
-    _catList.remove(cat);
-  }
-
-  void deleteCatById(String id) {
-    for (var cat in _catList) {
-      if (cat.id == id) {
-        _catList.remove(cat);
-        break;
-      }
+  Future<bool> addCat(Cat cat) async {
+    try {
+      await dao.insertCat(cat);
+      return true;
+    } on Exception catch (_) {
+      return false;
     }
   }
 
-  void updateCat(String id, Cat cat) {
-    for (int i = 0; i < _catList.length; i++) {
-      if (_catList[i].id == id) {
-        _catList[i] = cat;
-        break;
-      }
+  Future<bool> deleteCatById(String id) async {
+    try {
+      final cat = await dao.findCatById(id);
+      if (cat == null) return false;
+      dao.deleteCat(cat);
+      return true;
+    } on Exception catch (_) {
+      return false;
     }
   }
 
-  Cat? getCatById(var id) {
-    for (int i = 0; i < _catList.length; i++) {
-      if (_catList[i].id == id) {
-        return _catList[i];
-      }
+  Future<bool> updateCat(Cat cat) async {
+    try {
+      await dao.updateCat(cat);
+      return true;
+    } on Exception catch (_) {
+      return false;
     }
-    return null;
+  }
+
+  Future<Cat?> getCatById(String id) async {
+    return await dao.findCatById(id);
   }
 }
 

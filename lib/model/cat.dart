@@ -1,6 +1,9 @@
 import 'package:uuid/uuid.dart';
+import 'package:floor/floor.dart';
 
+@entity
 class Cat {
+  @primaryKey
   String id = const Uuid().v1();
   String name = '';
   String age = '';
