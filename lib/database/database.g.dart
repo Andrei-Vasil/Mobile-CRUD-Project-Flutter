@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Cat` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `age` TEXT NOT NULL, `breed` TEXT NOT NULL, `owner` TEXT NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Cat` (`name` TEXT NOT NULL, `age` TEXT NOT NULL, `breed` TEXT NOT NULL, `owner` TEXT NOT NULL, `date` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -108,36 +108,36 @@ class _$CatDao extends CatDao {
             database,
             'Cat',
             (Cat item) => <String, Object?>{
-                  'id': item.id,
                   'name': item.name,
                   'age': item.age,
                   'breed': item.breed,
                   'owner': item.owner,
-                  'date': item.date
+                  'date': item.date,
+                  'id': item.id
                 }),
         _catUpdateAdapter = UpdateAdapter(
             database,
             'Cat',
             ['id'],
             (Cat item) => <String, Object?>{
-                  'id': item.id,
                   'name': item.name,
                   'age': item.age,
                   'breed': item.breed,
                   'owner': item.owner,
-                  'date': item.date
+                  'date': item.date,
+                  'id': item.id
                 }),
         _catDeletionAdapter = DeletionAdapter(
             database,
             'Cat',
             ['id'],
             (Cat item) => <String, Object?>{
-                  'id': item.id,
                   'name': item.name,
                   'age': item.age,
                   'breed': item.breed,
                   'owner': item.owner,
-                  'date': item.date
+                  'date': item.date,
+                  'id': item.id
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -156,6 +156,7 @@ class _$CatDao extends CatDao {
   Future<List<Cat>> findAllCats() async {
     return _queryAdapter.queryList('SELECT * FROM Cat',
         mapper: (Map<String, Object?> row) => Cat(
+            id: row['id'] as String,
             name: row['name'] as String,
             age: row['age'] as String,
             breed: row['breed'] as String,
@@ -167,6 +168,7 @@ class _$CatDao extends CatDao {
   Future<Cat?> findCatById(String id) async {
     return _queryAdapter.query('SELECT * FROM Cat WHERE id = ?1',
         mapper: (Map<String, Object?> row) => Cat(
+            id: row['id'] as String,
             name: row['name'] as String,
             age: row['age'] as String,
             breed: row['breed'] as String,

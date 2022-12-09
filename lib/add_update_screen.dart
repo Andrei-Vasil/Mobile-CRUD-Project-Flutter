@@ -21,7 +21,14 @@ class _AddUpdateScreenState extends State<AddUpdateScreen> {
         future: repository.getCatById(catId),
         builder: ((context, snapshot) {
           Cat? cat = snapshot.data;
-          cat ??= Cat.empty();
+          cat ??= Cat(
+            id: '',
+            name: '',
+            age: '',
+            breed: '',
+            owner: '',
+            date: '',
+          );
           return Scaffold(
               backgroundColor: Colors.greenAccent, body: CatForm(catId, cat));
         }));
@@ -85,6 +92,7 @@ class _CatFormState extends State<CatForm> {
                 ));
               } else {
                 Cat toAddCat = Cat(
+                  id: DateTime.now().toString(),
                   name: widget.cat.name,
                   age: widget.cat.age,
                   breed: widget.cat.breed,
