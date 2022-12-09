@@ -50,9 +50,6 @@ class _MyAppState extends State<MyApp> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         var currentCat = snapshot.data![index];
-                        print("[========================================]");
-                        print(index.toString() + " " + currentCat.id);
-                        print("[========================================]");
                         return Dismissible(
                             onDismissed: (direction) {
                               setState(() {
